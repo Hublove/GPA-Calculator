@@ -1,8 +1,8 @@
 import javafx.stage.Stage;
+import javafx.application.Application;
 
-import static javafx.application.Application.launch;
 
-public class GPACalculator {
+public class GPACalculator extends Application{
     GPAModel model; // Model
     View view; // View + Controller
 
@@ -10,13 +10,10 @@ public class GPACalculator {
         launch(args);
     }
 
-    @Override
     public void start(Stage stage) throws Exception {
 
         this.model = new GPAModel();
-
-        // View + Controller
         this.view = new View(model, stage);
     }
 }
-}
+

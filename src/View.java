@@ -1,5 +1,12 @@
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.SeparatorMenuItem;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 public class View implements EventHandler<ActionEvent> {
@@ -14,17 +21,19 @@ public class View implements EventHandler<ActionEvent> {
 
     private void initUI(Stage stage) {
 
-        this.gpaPanel = new GPAPanel(this.GPAModel);
-        this.shapeChooserPanel = new ShapeChooserPanel(this);
-
         BorderPane root = new BorderPane();
-        root.setTop(createMenuBar());
-        root.setCenter(this.paintPanel);
-        root.setLeft(this.shapeChooserPanel);
 
         Scene scene = new Scene(root);
+
+        TopMenu topMenu = new TopMenu();
+        LabelPanel labelPanel = new LabelPanel();
+
+        root.setLeft(new TermsPanel());
+        topMenu.updateGPA(labelPanel);
+        root.setCenter(labelPanel);
+        root.setTop(topMenu);
         stage.setScene(scene);
-        stage.setTitle("Paint");
+        stage.setTitle("GPA Calculator");
         stage.show();
     }
 
