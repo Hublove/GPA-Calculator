@@ -2,16 +2,15 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.SeparatorMenuItem;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 public class View implements EventHandler<ActionEvent> {
     private final Stage stage;
     private final GPAModel gpaModel;
+    LabelPanel labelPanel;
+    TopMenu topMenu;
 
     public View(GPAModel model, Stage stage) {
         this.stage = stage;
@@ -25,17 +24,17 @@ public class View implements EventHandler<ActionEvent> {
 
         Scene scene = new Scene(root);
 
-        TopMenu topMenu = new TopMenu();
-        LabelPanel labelPanel = new LabelPanel();
+        topMenu = new TopMenu();
+        labelPanel = new LabelPanel(this);
 
         root.setLeft(new TermsPanel());
-        topMenu.updateGPA(labelPanel);
         root.setCenter(labelPanel);
         root.setTop(topMenu);
         stage.setScene(scene);
         stage.setTitle("GPA Calculator");
         stage.show();
     }
+
 
     @Override
     public void handle(ActionEvent event) {

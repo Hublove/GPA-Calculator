@@ -1,9 +1,9 @@
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.*;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
 
-public class TopMenu extends VBox implements EventHandler<ActionEvent> {
+public class TopMenu extends HBox implements EventHandler<ActionEvent> {
     Label Name, gpa;
 
     public TopMenu() {
@@ -71,12 +71,12 @@ public class TopMenu extends VBox implements EventHandler<ActionEvent> {
 
         this.Name = new Label();
         this.gpa = new Label();
+
         this.getChildren().addAll(Name, gpa);
     }
 
     public void updateGPA(LabelPanel panel) {
-        this.gpa.setText(Double.toString(panel.calculateAvgMark()));
-        this.update();
+        this.gpa.setText(Double.toString(panel.calculateAvgMark()) + ": " + Double.toString(panel.calculateTotalWeight()));
     }
 
     public void update() {

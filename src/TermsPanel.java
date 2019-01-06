@@ -11,8 +11,7 @@ import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 
-public class TermsPanel extends VBox implements EventHandler<ActionEvent>{
-    public static int yearNum;
+public class TermsPanel extends VBox {
     private ArrayList<TreeItem> yearsItems = new ArrayList<TreeItem>();
     private ArrayList<TreeItem> termItems = new ArrayList<TreeItem>();
     private TreeItem<String> root = new TreeItem<String>();
@@ -22,10 +21,9 @@ public class TermsPanel extends VBox implements EventHandler<ActionEvent>{
 
     public TermsPanel() {
         treeView.setShowRoot(false);
-        //Control Buttons
 
         Button add = new Button("Add");
-        add.setOnAction(this);
+        add.setOnAction(addHandle);
         Button remove = new Button("Remove");
         remove.setOnAction(event -> this.output());
         Button moveUp = new Button("Move Up");
@@ -78,10 +76,8 @@ public class TermsPanel extends VBox implements EventHandler<ActionEvent>{
     }
 
     public void addYear() {
-
         TreeItem<String> year = new TreeItem<String> ("Year: ");
         this.yearsItems.add(year);
-
         this.update();
     }
 
@@ -89,26 +85,31 @@ public class TermsPanel extends VBox implements EventHandler<ActionEvent>{
         TreeItem<String> term = new TreeItem<String>("Term: ");
         year.getChildren().add(term);
         this.update();
+
     }
 
+    public void addClass(TreeItem term) {
+        TreeItem<String> course = new TreeItem<String>("Class: ");
+        term.getChildren().add(course);
+        this.update();
+    }
 
+    EventHandler<ActionEvent> addHandle = new EventHandler<ActionEvent>() {
 
-    @Override
-    public void handle(ActionEvent event) {
+        public void handle(ActionEvent event) {
         TreeItem<String> item = treeView.getSelectionModel().getSelectedItem();
 
         if (item instanceof TreeItem) {
             for (TreeItem<String> year : yearsItems) {
                 if (year == item) {
-                    System.out.println(4);
-                    this.addTerm(item);
+                    addTerm(item);
                     yearsItems.set(yearsItems.indexOf(year), item);
                 }
             }
+        } else
+            addYear();
         }
-        else {
-            this.addYear();
-        }
-    }
+    };
+
 }
 

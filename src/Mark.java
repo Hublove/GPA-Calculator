@@ -1,28 +1,27 @@
 public class Mark {
     public String assignmentName;
-    public double mark;
-    public double credit;
+    public Double mark, weight;
 
     public Mark() {
 
     }
 
-    public Mark(String assignmentName, int mark, double credit) {
+    public Mark(String assignmentName, Double mark, double credit) {
         this.assignmentName = assignmentName;
         this.mark = mark;
-        this.credit = credit;
+        this.weight = credit;
     }
 
     public String getAssignmentName() {
         return this.assignmentName;
     }
 
-    public double getMark() {
+    public Double getMark() {
         return this.mark;
 }
 
-    public double getCredit() {
-        return getCredit();
+    public Double getWeight() {
+        return this.weight;
     }
 
     public void setAssignmentName(String assignmentName) {
@@ -33,8 +32,8 @@ public class Mark {
         this.mark = mark;
     }
 
-    public void setCredit(double credit) {
-        this.credit = credit;
+    public void setWeight(Double weight) {
+        this.weight = weight;
     }
 
 }

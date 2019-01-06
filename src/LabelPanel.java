@@ -12,14 +12,16 @@ import java.util.ArrayList;
 public class LabelPanel extends VBox implements EventHandler<ActionEvent> {
     private ArrayList<MarkPanel> marks = new ArrayList<>();
     private ArrayList<Label> labels = new ArrayList<>();
+    public View view;
 
-    public LabelPanel() {
+    public LabelPanel(View view) {
+        this.view = view;
         labels.add(new Label("Mark Name"));
         labels.add(new Label("Mark (%)") );
-        labels.add(new Label("Credit") );
-        marks.add(new MarkPanel());
-        marks.add(new MarkPanel());
-        marks.add(new MarkPanel());
+        labels.add(new Label("Weight") );
+        marks.add(new MarkPanel(view));
+        marks.add(new MarkPanel(view));
+        marks.add(new MarkPanel(view));
         this.update();
     }
 
@@ -41,23 +43,49 @@ public class LabelPanel extends VBox implements EventHandler<ActionEvent> {
         Button addButton = new Button("Add Mark");
         addButton.setOnAction(event -> addMark());
         this.getChildren().add(addButton);
+        this.calculateAvgMark();
+        this.calculateTotalWeight();
     }
 
     public void addMark() {
-        marks.add(new MarkPanel());
+        marks.add(new MarkPanel(this.view));
         this.update();
     }
 
+    public void removeMark(MarkPanel mark) {
+        marks.remove(mark);
+        mark.update();
+        mark.getChildren().clear();
+    }
+
     public double calculateAvgMark() {
-//        ArrayList<Double> numMarks = new ArrayList<>();
         double total = 0;
-        int div = 0;
+
+        if (marks.isEmpty())
+            return 0;
+
         for (MarkPanel mark: marks) {
-           total += mark.getMark();
-           div++;
+            if (mark.getMark() != null && mark.getWeight() != null) {
+                total += mark.getMark() * (mark.getWeight() / 100);
+            }
         }
 
-        return total / div;
+        return total;
+    }
+
+    public double calculateTotalWeight() {
+        double totalWeight = 0;
+
+        if (marks.isEmpty())
+            return 0;
+
+        for (MarkPanel mark: marks) {
+            if (mark.getMark() != null && mark.getWeight() != null) {
+                totalWeight += mark.getWeight();
+            }
+        }
+
+        return totalWeight;
     }
 
     @Override
